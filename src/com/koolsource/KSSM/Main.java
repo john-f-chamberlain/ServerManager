@@ -105,6 +105,7 @@ public class Main extends JavaPlugin {
     public WebReader getWeb() {
         WebReader web = new WebReader();
         web.setURL(httpUrl);
+        web.setType(web.POST);
         web.setParam("SecurityKey", securityKey);
         web.setParam("ServerID", this.getServer().getServerId());
         return web;

@@ -1,6 +1,5 @@
 package com.koolsource.KSSM;
 
-
 import com.koolsource.KSSM.BanList.BanListCommand;
 import com.koolsource.KSSM.BanList.BanListListener;
 import com.koolsource.KSSM.ForumBridge.ForumBridgeCommand;
@@ -30,7 +29,7 @@ public class Main extends JavaPlugin {
     private Chat chat;
     private static Boolean error = false;
     private static Boolean debug = true;
-    private static int  serverID = 1;
+    private static int serverID = 1;
     public static final String ChatLogo = ChatColor.RED + "[" + ChatColor.YELLOW + "KSFB" + ChatColor.RED + "] " + ChatColor.RESET;
     private static String httpUrl = "http://koolsource.com/KSSM/api.php";
     private static String securityKey = ""
@@ -69,48 +68,48 @@ public class Main extends JavaPlugin {
 
         //# Banlist
         this.getServer().getPluginManager().registerEvents(new BanListListener(this), this);
-            this.getCommand("KSBL").setExecutor(BanListCommand);
-            this.getCommand("checkban").setExecutor(BanListCommand);
-            this.getCommand("banip").setExecutor(BanListCommand);
-            this.getCommand("ban").setExecutor(BanListCommand);
-            this.getCommand("kick").setExecutor(BanListCommand);
-            this.getCommand("tempban").setExecutor(BanListCommand);
-            this.getCommand("warn").setExecutor(BanListCommand);
-            this.getCommand("unban").setExecutor(BanListCommand);
+        this.getCommand("KSBL").setExecutor(BanListCommand);
+        this.getCommand("checkban").setExecutor(BanListCommand);
+        this.getCommand("banip").setExecutor(BanListCommand);
+        this.getCommand("ban").setExecutor(BanListCommand);
+        this.getCommand("kick").setExecutor(BanListCommand);
+        this.getCommand("tempban").setExecutor(BanListCommand);
+        this.getCommand("warn").setExecutor(BanListCommand);
+        this.getCommand("unban").setExecutor(BanListCommand);
 
         //# Forum Bridge
         this.getServer().getPluginManager().registerEvents(new ForumBridgeListener(this), this);
-            this.getCommand("KSFB").setExecutor(ForumBridgeCommand);
-            this.getCommand("sync").setExecutor(ForumBridgeCommand);
+        this.getCommand("KSFB").setExecutor(ForumBridgeCommand);
+        this.getCommand("sync").setExecutor(ForumBridgeCommand);
 
         //# Issue Reports
         this.getServer().getPluginManager().registerEvents(new IssueReportListener(this), this);
-            this.getCommand("KSIR").setExecutor(IssueReportCommand);
+        this.getCommand("KSIR").setExecutor(IssueReportCommand);
 
         //# Player List
         this.getServer().getPluginManager().registerEvents(new PlayerListListener(this), this);
-            this.getCommand("KSPL").setExecutor(PlayerListCommand);
+        this.getCommand("KSPL").setExecutor(PlayerListCommand);
 
         //# Player Notes
         this.getServer().getPluginManager().registerEvents(new PlayerNoteListener(this), this);
-            this.getCommand("KSPN").setExecutor(PlayerNoteCommand);
+        this.getCommand("KSPN").setExecutor(PlayerNoteCommand);
 
         //# Verification
         this.getServer().getPluginManager().registerEvents(new VerificationListener(this), this);
-            this.getCommand("KSVC").setExecutor(VerificationCommand);
+        this.getCommand("KSVC").setExecutor(VerificationCommand);
 
 
         LogWriter.info("KSSM Loaded Successfully");
     }
-    
-    public WebReader getWeb(){
+
+    public WebReader getWeb() {
         WebReader web = new WebReader();
         web.setURL(httpUrl);
         web.setParam("SecurityKey", securityKey);
         web.setParam("ServerID", this.getServer().getServerId());
         return web;
     }
-    
+
     private boolean setupPermissions() {
         if (getServer().getPluginManager().getPlugin("Vault") == null) {
             return false;
@@ -162,19 +161,19 @@ public class Main extends JavaPlugin {
     public Chat getChat() {
         return this.chat;
     }
-    
-    public static int getID(){
+
+    public static int getID() {
         return Main.serverID;
     }
-    
-    public static String getSecurityKey(){
+
+    public static String getSecurityKey() {
         return Main.securityKey;
     }
-    
-    public static String getHttpUrl(){
+
+    public static String getHttpUrl() {
         return Main.httpUrl;
     }
-    
+
     public static String combineSplit(int startIndex, String[] string, String seperator) {
         StringBuilder builder = new StringBuilder();
 
@@ -186,8 +185,18 @@ public class Main extends JavaPlugin {
         builder.deleteCharAt(builder.length() - seperator.length());
         return builder.toString();
     }
-    
-    public static void noPermission(Player aSender){
+
+    public static void noPermission(Player aSender) {
         aSender.sendMessage(ChatColor.RED + "You do not have access to this command.");
+    }
+
+    public String[] arrayShift(String[] anArray, int position) {
+        String temp = anArray[position];
+        String[] array = null;
+
+        for (int i = (position - 1); i >= 0; i--) {
+            array[i + 1] = array[i];
+        }
+        return array;
     }
 }

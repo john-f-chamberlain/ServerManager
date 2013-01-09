@@ -4,4 +4,6 @@
 dist/*
 *.war
 *.ear
-private.properties
+
+# NetBeans Private Files
+private.*

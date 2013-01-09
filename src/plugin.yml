@@ -1,0 +1,102 @@
+name: KoolSource Server Manager
+version: 0.0.2
+description: One plugin for multiple functions.
+author: KoolSource
+authors: [John]
+website: http://koolsource.com/
+
+main: com.koolsource.john.KSSM.Main
+database: false
+depend: [Vault]
+
+commands:
+  # Banlist Commands
+  KSBL:
+    description: []
+  checkban:
+    description: []
+    aliases: [cb, banned]
+  banip:
+    description: []
+    aliases: [bip, ipban]
+  ban:
+    description: []
+    aliases: [b]
+  kick:
+    description: []
+    aliases: [k, kik, kic]
+  tempban:
+    description: []
+    aliases: [tb, temban, tban]
+  warn:
+    description: []
+    aliases: [w]
+  unban:
+    description: []
+    
+  # Forum Bridge Commands
+  KSFB:
+    description: []
+  sync:
+    description: []
+    aliases: [fsync, resync]
+  
+  # Issue Reports
+  KSIR:
+    description: []
+    aliases: [issues, ireport, issue]
+  
+  # Plyaer List
+  KSPL:
+    description: []
+    alises: [players, list, who, online]
+  
+  # Player Notes
+  KSPN:
+    description: []
+    aliases: [pn, playernote, notes, pnote]
+    
+  # Verification
+  KSVC:
+    description: []
+    aliases: [verify, v, verification]
+    
+permissions:
+  KSSM.Banlist.checkban:
+    default: false
+  KSSM.Banlist.banip:
+    default: false
+  KSSM.Banlist.ban:
+    default: false
+  KSSM.Banlist.kick:
+    default: false
+  KSSM.Banlist.tempban:
+    default: false
+  KSSM.Banlist.warn:
+    default: false
+  KSSM.Banlist.unban:
+    default: false
+    
+  KSSM.ForumBridge.sync:
+    default: true
+  KSSM.ForumBridge.sync.others:
+    default: false
+    
+  KSSM.IssueReports.write:
+    default: false
+  KSSM.IssueReports.read:
+    default: false
+  KSSM.IssueReports.delete:
+    default: false
+    
+  KSSM.PlayerList.view:
+    default: false
+  KSSM.PlayerNotes.write:
+    default: false
+  KSSM.PlayerNotes.read:
+    default: false
+  KSSM.PlayerNotes.delete:
+    default: false
+    
+  KSSM.Verify.view:
+    default: false

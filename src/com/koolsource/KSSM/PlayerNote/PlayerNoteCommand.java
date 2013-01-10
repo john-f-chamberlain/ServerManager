@@ -25,18 +25,17 @@ public class PlayerNoteCommand implements CommandExecutor{
     @Override
     public boolean onCommand(CommandSender aSender, Command aCommand, String aString, String[] anArray) {
         // /note create playername This player was being bad.
-        String command = anArray[0];
-        
-        if(command.equals("create")){
-            return this.function.createNote(aSender, anArray);
-        }else if(command.equals("delete")){
+        if(aCommand.getName().equalsIgnoreCase("noteadd")){
+            return this.function.createNote(aSender, anArray, false);
+        }else if(aCommand.getName().equalsIgnoreCase("noteaddoff")){
+            return this.function.createNote(aSender, anArray, true);
+        }else if(aCommand.getName().equalsIgnoreCase("noterem")){
             return this.function.deleteNote(aSender, anArray);
-        }else if(command.equals("view")){
+        }else if(aCommand.getName().equalsIgnoreCase("noteview")){
             return this.function.viewNote(aSender, anArray);
+        }else{
+            return false;
         }
-        
-        
-        return true;
     }
     
 }

@@ -4,6 +4,7 @@
  */
 package com.koolsource.KSSM.PlayerNote;
 
+import com.koolsource.KSSM.Includes.GeneralFunctions;
 import com.koolsource.KSSM.Includes.WebReader;
 import com.koolsource.KSSM.Main;
 import org.bukkit.ChatColor;
@@ -29,7 +30,7 @@ public class Functions {
         }
         
         String vicName = anArray[0];
-        String note = Main.combineSplit(1, anArray, " ");
+        String note = GeneralFunctions.combineSplit(1, anArray, " ");
         
         Player vic;
         vic = this.plugin.getServer().getPlayer(vicName);
@@ -75,6 +76,12 @@ public class Functions {
 
     boolean deleteNote(CommandSender aSender, String[] anArray) {
         if(!this.plugin.getPerm().has(aSender, "kssm.playernote.delete")) {Main.noPermission((Player) aSender);return true;}
+        
+        
+        if(anArray.length != 1 || !GeneralFunctions.isInt(anArray[0])){
+            return false;
+        }
+        
         
         return true;
     }

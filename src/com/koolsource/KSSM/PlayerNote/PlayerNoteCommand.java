@@ -8,7 +8,6 @@ import com.koolsource.KSSM.Main;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import com.koolsource.KSSM.PlayerNote.Functions;
 /**
  *
  * @author john
@@ -33,6 +32,8 @@ public class PlayerNoteCommand implements CommandExecutor{
             return this.function.deleteNote(aSender, anArray);
         }else if(aCommand.getName().equalsIgnoreCase("noteview")){
             return this.function.viewNote(aSender, anArray);
+        }else if(aCommand.getName().equalsIgnoreCase("watchplayer")){
+            return this.function.addWatch(aSender, anArray);
         }else{
             return false;
         }

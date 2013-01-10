@@ -69,6 +69,9 @@ public class Functions {
         
         if(response.equals("success")){
             aSender.sendMessage(Main.ChatLogo + ChatColor.GREEN + "Note created successfully for player \"" + vic.getName() + "\".");
+        }else{
+            aSender.sendMessage(Main.ChatLogo + ChatColor.RED + "Note not created!");
+            aSender.sendMessage(ChatColor.RED + "Reason: " + response);
         }
         
         return true;
@@ -77,9 +80,27 @@ public class Functions {
     boolean deleteNote(CommandSender aSender, String[] anArray) {
         if(!this.plugin.getPerm().has(aSender, "kssm.playernote.delete")) {Main.noPermission((Player) aSender);return true;}
         
-        
         if(anArray.length != 1 || !GeneralFunctions.isInt(anArray[0])){
             return false;
+        }
+        
+        
+        
+        WebReader web = this.plugin.getWeb();
+        web.setParam("Section", "PlayerNote");
+        web.setParam("Action", "DeleteNote");
+        web.setParam("Admin", aSender.getName());
+        web.setParam("NoteID", anArray[0]);
+        web.setParam("GlobalDelete", (this.plugin.getPerm().has(aSender, "kssm.playernote.delete.all")) ? "true" : "false");
+        web.makeRequest();
+        
+        String response = web.getResponse();
+        
+        if(response.equals("success")){
+            aSender.sendMessage(Main.ChatLogo + ChatColor.GREEN + "Note #" + anArray[0] + " successfully deleted!");
+        }else{
+            aSender.sendMessage(Main.ChatLogo + ChatColor.RED + "Note NOT deleted!");
+            aSender.sendMessage(ChatColor.RED + "Reason: " + response);
         }
         
         

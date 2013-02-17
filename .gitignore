@@ -7,3 +7,4 @@ dist/*
 
 # NetBeans Private Files
 private.*
+/build/

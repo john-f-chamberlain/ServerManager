@@ -14,9 +14,10 @@ import org.bukkit.command.CommandSender;
  * @author john
  */
 public class IssueReportCommand  implements CommandExecutor{
+    private final Main plugin;
 
     public IssueReportCommand(Main aThis) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        this.plugin = aThis;
     }
 
     @Override

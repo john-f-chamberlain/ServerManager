@@ -14,9 +14,10 @@ import org.bukkit.command.CommandSender;
  * @author john
  */
 public class BanListCommand implements CommandExecutor {
+    private final Main plugin;
 
     public BanListCommand(Main aThis) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        this.plugin = aThis;
     }
 
     @Override

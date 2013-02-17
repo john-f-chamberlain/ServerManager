@@ -4,6 +4,7 @@
  */
 package com.koolsource.KSSM.PlayerNote;
 
+import com.koolsource.KSSM.Includes.LogWriter;
 import com.koolsource.KSSM.Main;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -23,7 +24,8 @@ public class PlayerNoteCommand implements CommandExecutor{
 
     @Override
     public boolean onCommand(CommandSender aSender, Command aCommand, String aString, String[] anArray) {
-        // /note create playername This player was being bad.
+        // Ex: /note create playername This player was being bad.
+        
         if(aCommand.getName().equalsIgnoreCase("noteadd")){
             return this.function.createNote(aSender, anArray, false);
         }else if(aCommand.getName().equalsIgnoreCase("noteaddoff")){
@@ -32,8 +34,10 @@ public class PlayerNoteCommand implements CommandExecutor{
             return this.function.deleteNote(aSender, anArray);
         }else if(aCommand.getName().equalsIgnoreCase("noteview")){
             return this.function.viewNote(aSender, anArray);
-        }else if(aCommand.getName().equalsIgnoreCase("watchplayer")){
+        }else if(aCommand.getName().equalsIgnoreCase("watch")){
             return this.function.addWatch(aSender, anArray);
+        }else if(aCommand.getName().equalsIgnoreCase("unwatch")){
+            return this.function.remWatch(aSender, anArray);
         }else{
             return false;
         }

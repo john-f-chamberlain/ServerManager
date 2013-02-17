@@ -12,9 +12,10 @@ import org.bukkit.event.Listener;
  * @author john
  */
 public class VerificationListener implements Listener {
+    private final Main plugin;
 
     public VerificationListener(Main aThis) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        this.plugin = aThis;
     }
     
 }

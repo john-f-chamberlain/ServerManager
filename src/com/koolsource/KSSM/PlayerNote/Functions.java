@@ -5,6 +5,7 @@
 package com.koolsource.KSSM.PlayerNote;
 
 import com.koolsource.KSSM.Includes.GeneralFunctions;
+import com.koolsource.KSSM.Includes.LogWriter;
 import com.koolsource.KSSM.Includes.WebReader;
 import com.koolsource.KSSM.Main;
 import org.bukkit.ChatColor;
@@ -24,12 +25,14 @@ public class Functions {
     }
 
     boolean createNote(CommandSender aSender, String[] anArray, Boolean offline) {
+        LogWriter.debug("CreateNote Fired");
         if (!this.plugin.getPerm().has(aSender, "kssm.playernote.create")) {
             Main.noPermission((Player) aSender);
             return true;
         }
 
         if (anArray.length < 2) {
+            LogWriter.debug("Ending createNote [ Wrong Param Count ]");
             return false;
         }
 
@@ -44,7 +47,8 @@ public class Functions {
         if (vic == null) {
             // If they admin specified to search the offline players
             if (offline == true) {
-                vic = (Player) this.plugin.getServer().getOfflinePlayer(vicName);
+                vic = this.plugin.getServer().getOfflinePlayer(vicName).getPlayer();
+      
                 // If a player still cannot be found
                 if (vic == null) {
                     // Report error
@@ -61,9 +65,7 @@ public class Functions {
         // Ok so we have our victim, we have our admin, and we have our note... Now what?
         // Ohh yes... We add them to the database :)
         // Web server processes all the database crap so this is rather...
-        WebReader web = this.plugin.getWeb();
-        web.setParam("Section", "PlayerNote");
-        web.setParam("Action", "CreateNote");
+        WebReader web = this.plugin.getWeb("PlayerNotes", "CreateNote");
         web.setParam("Admin", aSender.getName());
         web.setParam("Victim", vic.getName());
         web.setParam("Note", note);
@@ -88,14 +90,13 @@ public class Functions {
         }
 
         if (anArray.length != 1 || !GeneralFunctions.isInt(anArray[0])) {
+            LogWriter.debug("Ending deleteNote [ Wrong Param Count ]");
             return false;
         }
 
 
 
-        WebReader web = this.plugin.getWeb();
-        web.setParam("Section", "PlayerNote");
-        web.setParam("Action", "DeleteNote");
+        WebReader web = this.plugin.getWeb("PlayerNotes", "DeleteNote");
         web.setParam("Admin", aSender.getName());
         web.setParam("NoteID", anArray[0]);
         web.setParam("GlobalDelete", (this.plugin.getPerm().has(aSender, "kssm.playernote.delete.all")) ? "true" : "false");
@@ -126,16 +127,41 @@ public class Functions {
     }
 
     boolean addWatch(CommandSender aSender, String[] anArray) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        if (!this.plugin.getPerm().has(aSender, "kssm.playernote.watch.add")) {
+            Main.noPermission((Player) aSender);
+            return true;
+        }
+
+        Player player = this.plugin.getServer().getPlayer(anArray[0]);
+        String note = GeneralFunctions.combineSplit(1, anArray, " ");
+        
+        if(player == null){
+            aSender.sendMessage(Main.ChatLogo + ChatColor.RED + "Unable to find player with search string \"" + ChatColor.GOLD + anArray[0] + ChatColor.RED + "\".");
+        }
+        
+        if(isWatched(player.getName())){
+            aSender.sendMessage(Main.ChatLogo + ChatColor.RED + "Player \"" + ChatColor.GOLD + player.getName() + ChatColor.RED + "\" already has a watch on them.");
+        }
+        return true;
     }
 
     boolean isWatched(String playerName) {
-        WebReader web = this.plugin.getWeb();
-        web.setParam("Section", "PlayerNotes");
-        web.setParam("Action","LookupWatch");
+        WebReader web = this.plugin.getWeb("PlayerNotes" , "LookupWatch");
         web.setParam("PlayerName", playerName);
         web.makeRequest();
         
         return web.getBoolean();
+    }
+    
+    String watchReason(String playerName){
+        WebReader web = this.plugin.getWeb("PlayerNotes", "WatchReason");
+        web.setParam("PlayerName", playerName);
+        web.makeRequest();
+        
+        return web.getResponse();
+    }
+
+    boolean remWatch(CommandSender aSender, String[] anArray) {
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 }

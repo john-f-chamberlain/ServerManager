@@ -12,9 +12,10 @@ import org.bukkit.event.Listener;
  * @author john
  */
 public class ForumBridgeListener implements Listener {
+    private final Main plugin;
 
     public ForumBridgeListener(Main aThis) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        this.plugin = aThis;
     }
     
 }

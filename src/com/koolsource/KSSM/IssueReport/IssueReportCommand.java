@@ -16,10 +16,22 @@ import org.bukkit.command.CommandSender;
 public class IssueReportCommand  implements CommandExecutor{
     private final Main plugin;
 
+    /**
+     *
+     * @param aThis
+     */
     public IssueReportCommand(Main aThis) {
         this.plugin = aThis;
     }
 
+    /**
+     *
+     * @param cs
+     * @param cmnd
+     * @param string
+     * @param strings
+     * @return
+     */
     @Override
     public boolean onCommand(CommandSender cs, Command cmnd, String string, String[] strings) {
         throw new UnsupportedOperationException("Not supported yet.");

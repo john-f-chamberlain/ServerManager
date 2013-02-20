@@ -14,6 +14,10 @@ import org.bukkit.event.Listener;
 public class IssueReportListener implements Listener {
     private final Main plugin;
     
+    /**
+     *
+     * @param aThis
+     */
     public IssueReportListener(Main aThis) {
         this.plugin = aThis;
     }

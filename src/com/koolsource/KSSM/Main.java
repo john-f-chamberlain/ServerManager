@@ -18,22 +18,44 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ *
+ * @author john
+ */
 public class Main extends JavaPlugin {
 
     // How many warns are needed to initiate an autokick?
+    /**
+     *
+     */
     public static final Integer autoKickThreshold = 3;
     // How many autokicks are needed to initiate an autoTempBan?
+    /**
+     *
+     */
     public static final Integer autoTempbanThreshold = 3;
     // How long should the temporary ban last if issued?
+    /**
+     *
+     */
     public static final String autoTempbanDuration = "1d";
     // How many autoTempBans are needed to initiate an autoPermBan?
+    /**
+     *
+     */
     public static final Integer autoBanThreshold = 9;
     //                                          You have been kicked for being warned too many times.\\
     //                                          You have been temporarily banned for being kicked too many times.
+    /**
+     *
+     */
     public static final String autoKickReason = "You have been %s for being %s too many times.";
     // Debug flag enables additional, verbouse debug messages including web-call data.
     private static Boolean debug = true;
     // Logo used to prefix most chat messages.
+    /**
+     *
+     */
     public static final String ChatLogo = ChatColor.RED + "[" + ChatColor.YELLOW + "KSFB" + ChatColor.RED + "] " + ChatColor.RESET;
     private Permission perms;
     private Economy econ;
@@ -58,9 +80,6 @@ public class Main extends JavaPlugin {
      + "0DF417E5B5599D3ECF30229A53A32A34"
      + "615E3A1E5069FF2DFC50B7B611AE3627";*/
 
-    /**
-     *
-     */
     @Override
     public void onEnable() {
 
@@ -84,6 +103,8 @@ public class Main extends JavaPlugin {
         this.getCommand("kick").setExecutor(BanListCommand);
         this.getCommand("warn").setExecutor(BanListCommand);
         this.getCommand("unban").setExecutor(BanListCommand);
+        
+        this.getCommand("verify").setExecutor(VerificationCommand);
 
         //# Forum Bridge
         //this.getServer().getPluginManager().registerEvents(new ForumBridgeListener(this), this);
@@ -111,7 +132,29 @@ public class Main extends JavaPlugin {
         //# Verification
         //this.getServer().getPluginManager().registerEvents(new VerificationListener(this), this);
         //this.getCommand("KSVC").setExecutor(VerificationCommand);
-
+        
+        //Clear the player list so that it's empty.
+        LogWriter.info("Clearing online list...");
+        WebReader web = this.getWeb("PlayerList", "ClearList");
+        web.makeRequest();
+        if(web.getResponse().equals("SUCCESS")){
+            LogWriter.info("Cleared online list.");
+        }
+        
+        
+        LogWriter.info("Loading online players...");
+        web = this.getWeb("PlayerList", "PlayerJoin");
+        
+        int i = 0;
+        for(Player p: this.getServer().getOnlinePlayers()){
+            web.setParam("PlayerName[" + i + "]", p.getName());
+            web.setParam("IPAddress[" + i + "]", p.getAddress().getHostString());
+            i = i + 1;
+        }
+        web.makeRequest();
+        if(web.getResponse().equals("SUCCESS")){
+            LogWriter.info("Loaded online players.");
+        }
 
         LogWriter.info("KSSM Loaded Successfully");
     }
@@ -149,7 +192,7 @@ public class Main extends JavaPlugin {
         for (Player p : this.getServer().getOnlinePlayers()) {
             partName = p.getName();
             if (partName.contains(name)) {
-                LogWriter.debug("[FindPlayer] Found player with displayname with string: " + name + ". RealName: " + p.getName());
+                LogWriter.debug("[FindPlayer] SCHSTR: " + name + ". RN: " + p.getName());
                 return p;
             }
         }
@@ -157,12 +200,12 @@ public class Main extends JavaPlugin {
         for (Player p : this.getServer().getOnlinePlayers()) {
             partName = p.getDisplayName();
             if (partName.contains(name)) {
-                LogWriter.debug("[FindPlayer] Found player with displayname with string: " + name + ". DisplayName: " + partName + "; RealName: " + p.getName());
+                LogWriter.debug("[FindPlayer] SCHSTR: " + name + ". DN: " + partName + "; RN: " + p.getName());
                 return p;
             }
         }
 
-        LogWriter.debug("[FindPlayer] Unable to find player with string: " + name);
+        LogWriter.debug("[FindPlayer] SCHSTR: " + name + "; Unable to find.");
         return null;
 
     }

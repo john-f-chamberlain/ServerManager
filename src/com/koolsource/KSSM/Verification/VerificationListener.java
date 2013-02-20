@@ -14,6 +14,10 @@ import org.bukkit.event.Listener;
 public class VerificationListener implements Listener {
     private final Main plugin;
 
+    /**
+     *
+     * @param aThis
+     */
     public VerificationListener(Main aThis) {
         this.plugin = aThis;
     }

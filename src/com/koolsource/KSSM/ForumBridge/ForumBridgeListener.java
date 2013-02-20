@@ -14,6 +14,10 @@ import org.bukkit.event.Listener;
 public class ForumBridgeListener implements Listener {
     private final Main plugin;
 
+    /**
+     *
+     * @param aThis
+     */
     public ForumBridgeListener(Main aThis) {
         this.plugin = aThis;
     }

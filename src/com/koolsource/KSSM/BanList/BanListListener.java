@@ -21,6 +21,10 @@ import org.bukkit.event.player.PlayerLoginEvent;
 public class BanListListener implements Listener {
     private final Main plugin;
 
+    /**
+     *
+     * @param aThis
+     */
     public BanListListener(Main aThis) {
         this.plugin = aThis;
     }
@@ -53,6 +57,10 @@ public class BanListListener implements Listener {
         
     }
     
+    /**
+     *
+     * @param event
+     */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerKick(PlayerKickEvent event){
         event.setLeaveMessage(null);

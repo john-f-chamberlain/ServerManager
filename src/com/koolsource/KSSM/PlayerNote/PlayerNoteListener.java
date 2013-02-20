@@ -4,6 +4,8 @@
  */
 package com.koolsource.KSSM.PlayerNote;
 
+import com.koolsource.KSSM.Includes.GeneralFunctions;
+import com.koolsource.KSSM.Includes.WebReader;
 import com.koolsource.KSSM.Main;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -11,22 +13,24 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 
 /**
+ * Player Note Listener - 
  *
- * @author john
+ * @author Johnathan Chamberlain
+ * @since 0.1
  */
 public class PlayerNoteListener implements Listener {
     private final Main plugin;
-    private final Functions function;
 
+    /**
+     *
+     * @param aThis
+     */
     public PlayerNoteListener(Main aThis) {
         this.plugin = aThis;
-        this.function = new Functions(aThis);
     }
-    
-    
+
     /**
      *
      * @param event
@@ -38,12 +42,12 @@ public class PlayerNoteListener implements Listener {
         // If the player is on the watchlist we'll notify everyone that is
         // online and a moderator that the person has joined.
         
-        if(this.function.isWatched(playerName)){
-            String reason = this.function.watchReason(playerName);
+        String watchReason = this.watchReason(playerName);
+        if(!watchReason.equals("NONE")){
             for(Player p: this.plugin.getServer().getOnlinePlayers()){
                 if(this.plugin.getPerm().has(p, "KSSM.PlayerNote.seewatches")){
                     p.sendMessage(Main.ChatLogo + ChatColor.DARK_PURPLE + "[WATCH]" + ChatColor.RED + playerName + ", who is on the watchlist, joined the server.");
-                    p.sendMessage(Main.ChatLogo + ChatColor.DARK_RED + "Reason: " + ChatColor.DARK_PURPLE + reason );
+                    p.sendMessage(Main.ChatLogo + ChatColor.DARK_RED + "Reason: " + ChatColor.DARK_PURPLE + watchReason );
                 }
             }
             return;
@@ -67,10 +71,19 @@ public class PlayerNoteListener implements Listener {
                  * Make one web-call that returns an array of players and reasons
                  * for being added to the watchlist.
                  */
-                if(this.function.isWatched(p.getName())){
-                    event.getPlayer().sendMessage(Main.ChatLogo + ChatColor.DARK_PURPLE + "[WATCH] Player: " + p.getName() + " Reason: " + this.function.watchReason(p.getName()));
+                watchReason = this.watchReason(p.getName());
+                if(!watchReason.equals("NONE")){
+                    event.getPlayer().sendMessage(Main.ChatLogo + ChatColor.DARK_PURPLE + "[WATCH] Player: " + p.getName() + " Reason: " + watchReason);
                 }
             }
         }
+    }
+    
+    String watchReason(String playerName){
+        WebReader web = this.plugin.getWeb("PlayerNotes", "WatchReason");
+        web.setParam("PlayerName", playerName);
+        web.makeRequest();
+        
+        return web.getResponse();
     }
 }

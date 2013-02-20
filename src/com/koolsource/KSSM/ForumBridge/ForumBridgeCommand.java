@@ -18,11 +18,23 @@ public class ForumBridgeCommand  implements CommandExecutor{
     private final Main plugin;
     private final Functions function;
 
+    /**
+     *
+     * @param aThis
+     */
     public ForumBridgeCommand(Main aThis) {
         this.plugin = aThis;
         this.function = new Functions(aThis);
     }
 
+    /**
+     *
+     * @param aSender
+     * @param aCommand
+     * @param aString
+     * @param anArray
+     * @return
+     */
     @Override
     public boolean onCommand(CommandSender aSender, Command aCommand, String aString, String[] anArray) {
         if(aCommand.getName().equals("fsync")){

@@ -16,6 +16,9 @@ import java.util.logging.Logger;
 public class LogWriter{
 
     private static final Logger log = Logger.getLogger("Minecraft");
+    /**
+     *
+     */
     public static final String prefix = "[KSFB]";
     private static boolean debug;
 

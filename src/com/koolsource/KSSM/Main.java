@@ -7,6 +7,7 @@ import com.koolsource.KSSM.Includes.LogWriter;
 import com.koolsource.KSSM.Includes.WebReader;
 import com.koolsource.KSSM.IssueReport.IssueReportCommand;
 import com.koolsource.KSSM.PlayerList.PlayerListCommand;
+import com.koolsource.KSSM.PlayerList.PlayerListListener;
 import com.koolsource.KSSM.PlayerNote.PlayerNoteCommand;
 import com.koolsource.KSSM.PlayerNote.PlayerNoteListener;
 import com.koolsource.KSSM.Verification.VerificationCommand;
@@ -82,7 +83,8 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
-
+        LogWriter.setDebug(Main.debug);
+        
         if (!this.setupPermissions() && !this.setupChat() && !this.setupEconomy()) {
             LogWriter.error("Disabling due to no Vault dependency found!");
             getServer().getPluginManager().disablePlugin(this);
@@ -104,7 +106,7 @@ public class Main extends JavaPlugin {
         this.getCommand("warn").setExecutor(BanListCommand);
         this.getCommand("unban").setExecutor(BanListCommand);
         
-        this.getCommand("verify").setExecutor(VerificationCommand);
+        //this.getCommand("verify").setExecutor(VerificationCommand);
 
         //# Forum Bridge
         //this.getServer().getPluginManager().registerEvents(new ForumBridgeListener(this), this);
@@ -128,6 +130,8 @@ public class Main extends JavaPlugin {
         this.getCommand("watch").setExecutor(PlayerNoteCommand);
         this.getCommand("unwatch").setExecutor(PlayerNoteCommand);
         
+        
+        this.getServer().getPluginManager().registerEvents(new PlayerListListener(this), this);
 
         //# Verification
         //this.getServer().getPluginManager().registerEvents(new VerificationListener(this), this);

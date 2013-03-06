@@ -26,7 +26,7 @@ public class LogWriter{
      *
      * @param status
      */
-    public void setDebug(boolean status){
+    public static void setDebug(boolean status){
         LogWriter.debug = status;
     }
     

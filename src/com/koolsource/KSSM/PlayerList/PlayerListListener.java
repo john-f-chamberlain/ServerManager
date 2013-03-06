@@ -4,6 +4,7 @@
  */
 package com.koolsource.KSSM.PlayerList;
 
+import com.koolsource.KSSM.Includes.LogWriter;
 import com.koolsource.KSSM.Includes.WebReader;
 import com.koolsource.KSSM.Main;
 import org.bukkit.entity.Player;
@@ -45,10 +46,12 @@ public class PlayerListListener implements Listener {
      */
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerJoin(PlayerJoinEvent event){
+        LogWriter.debug("Player Joined: " + event.getPlayer().getName());
         Player aPlayer = event.getPlayer();
         WebReader web = this.plugin.getWeb("PlayerList", "PlayerJoin");
         web.setParam("PlayerName", aPlayer.getName());
         web.setParam("IPAddress", aPlayer.getAddress().getHostString());
+        web.makeRequest();
     }
     
     /**
@@ -61,9 +64,11 @@ public class PlayerListListener implements Listener {
      */
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerQuit(PlayerQuitEvent event){
+        LogWriter.debug("Player Quit: " + event.getPlayer().getName());
         Player aPlayer = event.getPlayer();
         WebReader web = this.plugin.getWeb("PlayerList", "PlayerQuit");
         web.setParam("PlayerName", aPlayer.getName());
+        web.makeRequest();
     }
     
 }

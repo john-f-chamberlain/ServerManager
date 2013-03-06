@@ -30,3 +30,31 @@ commands:
     usage: /notelist <player>
     permission: kssm.playernotes
     permission-message: You do not have <permission>
+  watch:
+    description: adds a watch to a player.
+    usage: /watch <player> <reason>
+    permission: kssm.playernotes.watch
+  unwatch:
+    description: removes a watch from a player.
+    usage: /unwatch <player>
+    permission: kssm.playernotes.unwatch
+  checkban:
+    description: Checks to see if a player is banned.
+    usage: /checkban <player>
+    permission: kssm.banlist.checkban
+  ban:
+    description: Bans a player from the server.
+    usage: /ban <player> <time><unit> <reason...>
+    permission: kssm.banlist.ban
+  kick:
+    description: Kicks a player from the server.
+    usage: /kick <player> <reason...>
+    permission: kssm.banlist.kick
+  warn:
+    description: Adds a warning point to a player.
+    usage: /warn <player> <reason...>
+    permission: kssm.banlist.warn
+  unban:
+    description: Unbans a player from the server.
+    usage: /unban <player> <reason...>
+    permission: kssm.banlist.unban
